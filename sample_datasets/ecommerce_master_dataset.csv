@@ -1,14 +1,4 @@
-'use client'
-
-import React from 'react'
-import { Zap, FileSpreadsheet } from 'lucide-react'
-
-interface SampleDatasetLoaderProps {
-  onSelectSample: (file: File) => void
-  disabled?: boolean
-}
-
-const SAMPLE_CSV_CONTENT = `order_id,order_date,customer_name,product_name,category,region,quantity,unit_price,discount_percent,revenue,order_status,customer_rating
+order_id,order_date,customer_name,product_name,category,region,quantity,unit_price,discount_percent,revenue,order_status,customer_rating
 1001,2026-01-05,John Doe,Wireless Headphones,Electronics,North,2,150.00,0,300.00,Completed,4.8
 1002,2026-01-06,Jane Smith,Mechanical Keyboard,Electronics,West,1,120.00,10,108.00,Completed,4.5
 1003,2026-01-07,Bob Johnson,Ergonomic Chair,Furniture,East,1,350.00,0,350.00,Completed,5.0
@@ -38,31 +28,4 @@ const SAMPLE_CSV_CONTENT = `order_id,order_date,customer_name,product_name,categ
 1027,2026-03-22,Harper White,Standing Desk,Furniture,Central,2,600.00,10,1080.00,Completed,4.9
 1028,2026-03-25,Evelyn Harris,USB-C Hub,Accessories,South,6,30.00,0,180.00,Completed,4.1
 1029,2026-03-27,James Martin,Mechanical Keyboard,Electronics,Central,3,120.00,5,342.00,Completed,4.7
-1030,2026-03-28,Grace Lee,Smart Watch,Electronics,South,1,220.00,0,220.00,Completed,5.0`
-
-export default function SampleDatasetLoader({ onSelectSample, disabled }: SampleDatasetLoaderProps) {
-  const handleLoadSample = (e: React.MouseEvent) => {
-    e.stopPropagation()
-    const blob = new Blob([SAMPLE_CSV_CONTENT], { type: 'text/csv' })
-    const file = new File([blob], 'ecommerce_master_dataset.csv', { type: 'text/csv' })
-    onSelectSample(file)
-  }
-
-  return (
-    <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3">
-      <span className="text-xs text-slate-400 font-medium flex items-center gap-1.5">
-        <Zap className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-        Want to try immediately?
-      </span>
-      <button
-        type="button"
-        onClick={handleLoadSample}
-        disabled={disabled}
-        className="px-4 py-2 rounded-xl bg-slate-900 border border-slate-700/80 hover:border-indigo-500/60 text-slate-200 hover:text-white text-xs font-semibold shadow-md transition-all flex items-center gap-2 active:scale-95 disabled:opacity-50 cursor-pointer"
-      >
-        <FileSpreadsheet className="w-3.5 h-3.5 text-indigo-400" />
-        <span>⚡ Launch Master E-Commerce Dataset (.csv)</span>
-      </button>
-    </div>
-  )
-}
+1030,2026-03-28,Grace Lee,Smart Watch,Electronics,South,1,220.00,0,220.00,Completed,5.0
