@@ -1,0 +1,43 @@
+services:
+  # 1. Python Analysis Service (FastAPI)
+  - type: web
+    name: datapilot-analysis-service
+    env: python
+    rootDir: analysis-service
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+
+  # 2. Node.js Express Backend API
+  - type: web
+    name: datapilot-backend
+    env: node
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: GEMINI_MODEL
+        value: gemini-2.5-flash
+      - key: PYTHON_SERVICE_URL
+        fromService:
+          type: web
+          name: datapilot-analysis-service
+          property: url
+
+  # 3. Next.js Frontend Web Application
+  - type: web
+    name: datapilot-frontend
+    env: node
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NEXT_PUBLIC_API_URL
+        fromService:
+          type: web
+          name: datapilot-backend
+          property: url
